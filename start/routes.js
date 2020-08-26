@@ -49,14 +49,13 @@ Route.group(() => {
   Route.get('categorias', 'ArticuloController.getcat');
   // Servicios
   Route.get('servicios', 'ArticuloController.showservice');
-
-
   // RUTA DEL ROL
   Route.get('/roles', 'RoleController.index').middleware(['auth']);
   //Admin
   Route.get('usuario/getUsers', 'UserController.getUsers');
   Route.get('usuario/Userfind', 'UserController.Userfind');
   Route.post('usuario/UpdateUser', 'UserController.UpdateUser');
-
-
+  // Chat
+  Route.post('sendmessage', 'BuzonController.sendmessage');
+  Route.post('getmessage', 'BuzonController.getmessages');
 }).prefix('api/');
