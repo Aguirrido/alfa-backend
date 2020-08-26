@@ -5,10 +5,9 @@ class PedidoController {
     async index({ auth }) {
         const user = await auth.getUser();
         return await Database
-            .select('descripcion', 'fecha_entrega', 'lugar_entrega', 'fecha_enterado', 'estatus')
+            .select('descripcion', 'estatus')
             .from('users')
             .innerJoin('pedidos', 'users.id', 'pedidos.user_id')
-            .innerJoin('ordenes', 'pedidos.id', 'ordenes.pedido_id')
             .where('users.id', user.id);
     }
 
@@ -32,8 +31,6 @@ class PedidoController {
     }
     async update({ request }) {
         const { id, estatus } = request.all();
-        console.log(`estatus`, estatus);
-        console.log(`id`, id.id);
         const pedido = await Pedido.find(id.id);
         pedido.merge({ estatus: estatus });
         return await pedido.save();

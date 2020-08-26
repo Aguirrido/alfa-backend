@@ -47,6 +47,8 @@ Route.group(() => {
   Route.delete('delarticulos/:id', 'ArticuloController.destroy');
   // TODO: realizar apis Categorias
   Route.get('categorias', 'ArticuloController.getcat');
+  // Servicios
+  Route.get('servicios', 'ArticuloController.showservice');
 
 
   // RUTA DEL ROL

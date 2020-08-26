@@ -5,12 +5,13 @@ const Database = use('Database');
 const User = use('App/Models/User');
 class ArticuloController {
     async index() {
-        return await Articulo.all();
+        return await Articulo.query().where('disponibilidad', 0).fetch();
     }
     async showarticles() {
         return await Database
             .select('articulos.id', 'articulos.nombre as nombre', 'categorias.nombre as categoria', 'articulos.precio', 'articulos.descripcion')
             .from('articulos')
+            .where('disponibilidad', 0)
             .innerJoin('categorias', 'categorias.id', 'articulos.categoria');
 
     }
@@ -39,8 +40,8 @@ class ArticuloController {
     async destroy({ params }) {
         const { id } = params;
         const article = await Articulo.find(id);
-        await article.delete();
-        return article;
+        article.merge({ disponibilidad: 1 });
+        return await article.save();
     }
     async update({ request }) {
         const { id, nombre, precio, categoria, descripcion } = request.all();
@@ -51,6 +52,10 @@ class ArticuloController {
     }
     async getcat() {
         return await Categoria.all();
+    }
+    async showservice() {
+        const service = await Articulo.query().where('categoria', 3).fetch();
+        return service;
     }
 }
 

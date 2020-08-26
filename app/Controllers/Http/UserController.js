@@ -57,60 +57,61 @@ class UserController {
 
 
   //admin//
-  async getUsers({request,response} ){
-    try{
-     const users = await User.all();
-     response.status(200).send({status:"Ok", data:users});
+  async getUsers({ request, response }) {
+    try {
+      const users = await User.all();
+      response.status(200).send({ status: "Ok", data: users });
     }
-    catch (error){
-     response.status(500).send({status:"Error", message:"Error con los usuarios", error:error});
+    catch (error) {
+      response.status(500).send({ status: "Error", message: "Error con los usuarios", error: error });
     }
-};
-  async Userfind({request,response} ){
-    const {username} = request.all();
+  };
+  async Userfind({ request, response }) {
+    const { username } = request.all();
     const user = await User.findBy('username', username);
-      if(user){
-     return    response.status(200).send({status:"Ok", data:user});
-      }
-      else {
-      return   response.status(500).send({status:"Error", message:"usuario no encontrado"});
-      }
+    if (user) {
+      return response.status(200).send({ status: "Ok", data: user });
+    }
+    else {
+      return response.status(500).send({ status: "Error", message: "usuario no encontrado" });
+      a
+    }
 
   }
-    async UpdateUser({request,response} ){
-    const {username, usernamenew, emailnew} = request.all();
+  async UpdateUser({ request, response }) {
+    const { username, usernamenew, emailnew } = request.all();
     const user = await User.findBy('username', username);
-  if (user) {
-    if (usernamenew !== null) {
+    if (user) {
+      if (usernamenew !== null) {
 
-      const userneww = await User.findBy('username', usernamenew);
-      if (userneww == null) {
-        user.username = usernamenew;
-        await user.save()
+        const userneww = await User.findBy('username', usernamenew);
+        if (userneww == null) {
+          user.username = usernamenew;
+          await user.save();
 
-      } else {
-        return response.status(500).send({status: "Error", message: "Ya existe, elija otro", username});
-      }
-    }
-
-    if (emailnew !== null) {
-      const email = await User.findBy('email', emailnew);
-      if (email == null) {
-        user.email = emailnew;
-        await user.save()
-
-      } else {
-        return response.status(500).send({status: "Error", message: "Ya existe, elija otro", username});
-      }
-    }
-    return response.status(200).send({status: "Ok", data: user});
-  }
-        else {
-          return response.status(404).send({status: "Error", message: "Ya", username});
+        } else {
+          return response.status(500).send({ status: "Error", message: "Ya existe, elija otro", userneww });
         }
+      }
 
+      if (emailnew !== null) {
+        const email = await User.findBy('email', emailnew);
+        if (email == null) {
+          user.email = emailnew;
+          await user.save();
 
+        } else {
+          return response.status(500).send({ status: "Error", message: "Ya existe, elija otro", username });
+        }
+      }
+      return response.status(200).send({ status: "Ok", data: user });
     }
+    else {
+      return response.status(404).send({ status: "Error", message: "Ya", username });
+    }
+
+
+  }
 
 }
 
