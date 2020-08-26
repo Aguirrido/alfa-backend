@@ -26,7 +26,7 @@ Route.group(() => {
   Route.delete('usuario', 'UserController.destroy').middleware(['auth']);
   Route.post('usuario/logout', 'UserController.logout').middleware(['auth']);
   // TODO: realizar apis Pedidos
-  Route.get('showpedidos', 'PedidoController.index').middleware(['auth']);
+  Route.get('showpedidos', 'PedidoController.pruebapedidos');
   Route.get('showallpedidos', 'PedidoController.getped').middleware(['auth']);
   Route.post('pedidos', 'PedidoController.create');
   Route.delete('pedidos/:id', 'PedidoController.destroy');
@@ -57,6 +57,8 @@ Route.group(() => {
   Route.get('usuario/getUsers', 'UserController.getUsers');
   Route.get('usuario/Userfind', 'UserController.Userfind');
   Route.post('usuario/UpdateUser', 'UserController.UpdateUser');
+
+
 
 
 }).prefix('api/');
